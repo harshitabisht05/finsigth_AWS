@@ -1,0 +1,109 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --bg-1: #061326;
+  --bg-2: #0a1c34;
+  --bg-3: #050d1d;
+  --text-primary: #e8f2ff;
+  --text-muted: rgba(210, 229, 255, 0.76);
+  --text-link: #8fc0ff;
+  --line: rgba(95, 162, 255, 0.35);
+  --line-soft: rgba(95, 162, 255, 0.2);
+  --card-1: rgba(11, 27, 52, 0.9);
+  --card-2: rgba(8, 18, 36, 0.9);
+  --chip: rgba(42, 95, 176, 0.17);
+  --chip-border: rgba(95, 162, 255, 0.25);
+  --btn-grad-1: #2a7fff;
+  --btn-grad-2: #1765df;
+  --btn-grad-3: #0f4db5;
+  --btn-shadow: rgba(27, 108, 230, 0.42);
+  --focus: rgba(85, 154, 255, 0.45);
+}
+
+[data-theme="light"] {
+  --bg-1: #f1f8ff;
+  --bg-2: #e5f1ff;
+  --bg-3: #dbeaff;
+  --text-primary: #0f2850;
+  --text-muted: rgba(35, 67, 114, 0.76);
+  --text-link: #145dc9;
+  --line: rgba(62, 127, 211, 0.45);
+  --line-soft: rgba(62, 127, 211, 0.22);
+  --card-1: rgba(255, 255, 255, 0.9);
+  --card-2: rgba(244, 251, 255, 0.88);
+  --chip: rgba(23, 101, 223, 0.08);
+  --chip-border: rgba(46, 112, 196, 0.25);
+  --btn-grad-1: #2c86ff;
+  --btn-grad-2: #1d6ce2;
+  --btn-grad-3: #1758ba;
+  --btn-shadow: rgba(23, 101, 223, 0.28);
+  --focus: rgba(49, 120, 211, 0.36);
+}
+
+* { box-sizing: border-box; }
+html, body, #root { min-height: 100%; }
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  min-height: 100dvh;
+  font-family: "Trebuchet MS", "Segoe UI", sans-serif;
+  background: linear-gradient(180deg, var(--bg-2) 0%, var(--bg-1) 60%, var(--bg-3) 100%);
+  color: var(--text-primary);
+}
+
+.card {
+  @apply rounded-2xl border shadow;
+  background: linear-gradient(180deg, var(--card-1), var(--card-2));
+  border-color: var(--line-soft);
+  color: var(--text-primary);
+}
+
+.glass { backdrop-filter: blur(10px); }
+.neon-border { border: 1px solid var(--line); }
+
+.neon-input {
+  @apply w-full rounded-xl border px-4 py-3 outline-none transition;
+  background: color-mix(in srgb, var(--bg-1) 72%, transparent);
+  border-color: var(--line);
+  color: var(--text-primary);
+}
+.neon-input::placeholder { color: var(--text-muted); }
+.neon-input:focus { box-shadow: 0 0 0 3px var(--focus); }
+
+.neon-btn {
+  @apply rounded-xl px-5 py-2.5 font-semibold transition;
+  color: #fff;
+  background: linear-gradient(90deg, var(--btn-grad-1) 0%, var(--btn-grad-2) 55%, var(--btn-grad-3) 100%);
+}
+
+.ghost-btn {
+  @apply rounded-xl px-5 py-2.5 transition;
+  border: 1px solid var(--line);
+  color: var(--text-primary);
+  background: color-mix(in srgb, var(--bg-1) 55%, transparent);
+}
+
+.text-theme { color: var(--text-primary); }
+.text-theme-muted { color: var(--text-muted); }
+.text-link { color: var(--text-link); }
+.text-danger { color: #ff7f7f; }
+.text-success { color: #66d8a4; }
+.surface-chip { background: var(--chip); border: 1px solid var(--chip-border); }
+
+.splash-screen { min-height: 100vh; min-height: 100dvh; display: grid; place-items: center; position: relative; overflow: hidden; background: linear-gradient(180deg, var(--bg-2) 0%, var(--bg-1) 100%); }
+.splash-orb { position: absolute; width: 320px; height: 320px; border-radius: 999px; filter: blur(40px); background: radial-gradient(circle, rgba(64, 148, 255, 0.5) 0%, transparent 70%); animation: pulseOrb 1.9s ease-in-out infinite; }
+.splash-content { position: relative; z-index: 1; text-align: center; animation: fadeRise 1.1s ease-out; }
+.splash-logo { width: 84px; height: 84px; margin: 0 auto; border-radius: 24px; border: 1px solid var(--line); display: flex; align-items: flex-end; justify-content: center; gap: 8px; padding: 14px; }
+.splash-bar { width: 10px; border-radius: 8px; display: inline-block; background: linear-gradient(180deg, var(--btn-grad-1) 0%, var(--btn-grad-3) 100%); animation: glowBar 1.2s ease-in-out infinite; }
+.splash-bar-1 { height: 20px; }
+.splash-bar-2 { height: 33px; animation-delay: 0.12s; }
+.splash-bar-3 { height: 46px; animation-delay: 0.24s; }
+.splash-title { margin: 16px 0 6px; font-size: 34px; letter-spacing: 1.4px; color: var(--text-primary); }
+.splash-subtitle { margin: 0; font-size: 13px; letter-spacing: 2.4px; text-transform: uppercase; color: var(--text-muted); }
+
+@keyframes fadeRise { from { opacity: 0; transform: translateY(8px) scale(0.98); } to { opacity: 1; transform: translateY(0) scale(1); } }
+@keyframes pulseOrb { 0%,100% { transform: scale(0.9); opacity: 0.6; } 50% { transform: scale(1.06); opacity: 1; } }
+@keyframes glowBar { 0%,100% { filter: brightness(0.88); } 50% { filter: brightness(1.25); } }

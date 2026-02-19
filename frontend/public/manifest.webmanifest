@@ -1,0 +1,12 @@
+{
+  "name": "FinSight",
+  "short_name": "FinSight",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#f1f8ff",
+  "theme_color": "#1765df",
+  "description": "Cloud cost optimization and governance dashboard for AWS.",
+  "icons": [
+    { "src": "/icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" }
+  ]
+}

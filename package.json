@@ -1,0 +1,54 @@
+{
+  "name": "finsight",
+  "private": true,
+  "version": "1.0.0",
+  "main": "desktop/main.cjs",
+  "scripts": {
+    "postinstall": "npm install --prefix backend && npm install --prefix frontend",
+    "dev": "concurrently \"npm run dev --prefix backend\" \"npm run dev --prefix frontend\"",
+    "start": "npm run start --prefix backend",
+    "build": "npm run build --prefix frontend",
+    "desktop:dev": "concurrently \"npm run dev --prefix frontend\" \"wait-on tcp:5173 && electron .\"",
+    "desktop:build": "npm run build --prefix frontend && electron-builder",
+    "desktop:build:win": "npm run build --prefix frontend && electron-builder --win nsis"
+  },
+  "devDependencies": {
+    "concurrently": "^9.1.2",
+    "electron": "^32.2.6",
+    "electron-builder": "^24.13.3",
+    "wait-on": "^8.0.1"
+  },
+  "dependencies": {
+    "lucide-react": "^0.575.0"
+  },
+  "build": {
+    "appId": "com.finsight.desktop",
+    "productName": "FinSight",
+    "directories": {
+      "output": "desktop-dist"
+    },
+    "files": [
+      "desktop/**/*",
+      "frontend/dist/**/*",
+      "package.json"
+    ],
+    "extraMetadata": {
+      "main": "desktop/main.cjs"
+    },
+    "win": {
+      "target": [
+        "nsis"
+      ]
+    },
+    "linux": {
+      "target": [
+        "AppImage"
+      ]
+    },
+    "mac": {
+      "target": [
+        "dmg"
+      ]
+    }
+  }
+}
