@@ -7,6 +7,9 @@ const AwsAccount = sequelize.define("aws_accounts", {
   role_arn: { type: DataTypes.STRING(500), allowNull: false },
   external_id: { type: DataTypes.STRING(255), allowNull: false },
   created_at: { type: DataTypes.DATE, defaultValue: DataTypes.NOW },
-}, { tableName: "aws_accounts" });
+}, {
+  tableName: "aws_accounts",
+  timestamps: false,
+});
 
 module.exports = AwsAccount;

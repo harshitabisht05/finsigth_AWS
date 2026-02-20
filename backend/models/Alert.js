@@ -7,6 +7,9 @@ const Alert = sequelize.define("alerts", {
   message: { type: DataTypes.TEXT, allowNull: false },
   type: { type: DataTypes.ENUM("info", "warning"), allowNull: false, defaultValue: "info" },
   created_at: { type: DataTypes.DATE, defaultValue: DataTypes.NOW },
-}, { tableName: "alerts" });
+}, {
+  tableName: "alerts",
+  timestamps: false,
+});
 
 module.exports = Alert;

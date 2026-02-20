@@ -19,11 +19,13 @@ const sequelize = new Sequelize(
     port: Number(process.env.DB_PORT),
     dialect: "mysql",
     logging: false,
-
+    define: {
+      timestamps: false,
+      underscored: true,
+    },
     dialectOptions: {
       ssl: sslOptions,
     },
-
     pool: {
       max: 5,
       min: 0,
@@ -33,9 +35,8 @@ const sequelize = new Sequelize(
   }
 );
 
-// Test connection
 sequelize.authenticate()
-  .then(() => console.log("✅ Aiven MySQL Connected"))
-  .catch(err => console.error("❌ DB Error:", err));
+  .then(() => console.log("DB connected"))
+  .catch((err) => console.error("DB error:", err));
 
 module.exports = sequelize;
