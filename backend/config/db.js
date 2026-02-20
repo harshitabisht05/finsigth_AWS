@@ -1,6 +1,14 @@
 const { Sequelize } = require("sequelize");
+const fs = require("fs");
+const path = require("path");
 
-const isSSL = process.env.DB_SSL === "true";
+const sslOptions = process.env.DB_SSL === "true"
+  ? {
+      require: true,
+      rejectUnauthorized: true,
+      ca: fs.readFileSync(path.join(__dirname, "ca.pem")),
+    }
+  : false;
 
 const sequelize = new Sequelize(
   process.env.DB_NAME,
@@ -8,23 +16,13 @@ const sequelize = new Sequelize(
   process.env.DB_PASSWORD,
   {
     host: process.env.DB_HOST,
-    port: Number(process.env.DB_PORT || 3306),
+    port: Number(process.env.DB_PORT),
     dialect: "mysql",
     logging: false,
 
-    define: {
-      underscored: true,
-      timestamps: false,
+    dialectOptions: {
+      ssl: sslOptions,
     },
-
-    dialectOptions: isSSL
-      ? {
-          ssl: {
-            require: true,
-            rejectUnauthorized: false,
-          },
-        }
-      : undefined,
 
     pool: {
       max: 5,
@@ -35,14 +33,9 @@ const sequelize = new Sequelize(
   }
 );
 
-// Test connection immediately
-sequelize
-  .authenticate()
-  .then(() => {
-    console.log("✅ MySQL Connected Successfully");
-  })
-  .catch((err) => {
-    console.error("❌ MySQL Connection Failed:", err.message);
-  });
+// Test connection
+sequelize.authenticate()
+  .then(() => console.log("✅ Aiven MySQL Connected"))
+  .catch(err => console.error("❌ DB Error:", err));
 
 module.exports = sequelize;
