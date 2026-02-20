@@ -10,6 +10,14 @@ const sequelize = new Sequelize(
     dialect: "mysql",
     logging: false,
     define: { underscored: true, timestamps: false },
+    dialectOptions: process.env.DB_SSL === "true"
+      ? {
+          ssl: {
+            require: true,
+            rejectUnauthorized: false,
+          },
+        }
+      : {},
   }
 );
 
