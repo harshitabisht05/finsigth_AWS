@@ -1,41 +1,31 @@
 const { Sequelize } = require("sequelize");
-const fs = require("fs");
-const path = require("path");
 
-const sslOptions = process.env.DB_SSL === "true"
-  ? {
+if (!process.env.DATABASE_URL) {
+  throw new Error("DATABASE_URL is not defined in environment variables");
+}
+
+const sequelize = new Sequelize(process.env.DATABASE_URL, {
+  dialect: "mysql",
+  logging: false,
+
+  dialectOptions: {
+    ssl: {
       require: true,
       rejectUnauthorized: false
     }
-  : false;
+  },
 
-const sequelize = new Sequelize(
-  process.env.DB_NAME,
-  process.env.DB_USER,
-  process.env.DB_PASSWORD,
-  {
-    host: process.env.DB_HOST,
-    port: Number(process.env.DB_PORT),
-    dialect: "mysql",
-    logging: false,
-    define: {
-      timestamps: false,
-      underscored: true,
-    },
-    dialectOptions: {
-      ssl: sslOptions,
-    },
-    pool: {
-      max: 5,
-      min: 0,
-      acquire: 30000,
-      idle: 10000,
-    },
+  define: {
+    timestamps: false,
+    underscored: true
+  },
+
+  pool: {
+    max: 5,
+    min: 0,
+    acquire: 30000,
+    idle: 10000
   }
-);
-
-sequelize.authenticate()
-  .then(() => console.log("DB connected"))
-  .catch((err) => console.error("DB error:", err));
+});
 
 module.exports = sequelize;
