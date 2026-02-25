@@ -5,8 +5,7 @@ const path = require("path");
 const sslOptions = process.env.DB_SSL === "true"
   ? {
       require: true,
-      rejectUnauthorized: true,
-      ca: fs.readFileSync(path.join(__dirname, "ca.pem")),
+      rejectUnauthorized: false
     }
   : false;
 
