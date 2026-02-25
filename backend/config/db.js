@@ -1,31 +1,22 @@
 const { Sequelize } = require("sequelize");
 
 if (!process.env.DATABASE_URL) {
-  throw new Error("DATABASE_URL is not defined in environment variables");
+  throw new Error("DATABASE_URL is not defined");
 }
 
 const sequelize = new Sequelize(process.env.DATABASE_URL, {
-  dialect: "mysql",
+  dialect: "postgres",
   logging: false,
-
   dialectOptions: {
     ssl: {
       require: true,
-      rejectUnauthorized: false
-    }
+      rejectUnauthorized: false,
+    },
   },
-
   define: {
     timestamps: false,
-    underscored: true
+    underscored: true,
   },
-
-  pool: {
-    max: 5,
-    min: 0,
-    acquire: 30000,
-    idle: 10000
-  }
 });
 
 module.exports = sequelize;
